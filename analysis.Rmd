@@ -41,8 +41,8 @@ fixed_vars=c("Status","Sex")
 
 output <-
     wrapper_daa(
-        min_abun = 0,
-        min_prev = 0.01,
+        min_abun = 2800,
+        min_prev = 0.1,
         metadata = meta_data,
         ASV_table = otu_table,
         fixed_vars = fixed_vars,
@@ -50,7 +50,6 @@ output <-
     )
 
 write.csv(output,file = "dAA_microbe_ouput.csv")
-
 
 
 ```
