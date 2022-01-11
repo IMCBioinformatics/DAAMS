@@ -1,0 +1,94 @@
+---
+title: "Example Analysis"
+author: "Hena R. Ramay"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  html_document:
+    theme: yeti
+    highlight: kate
+    toc: true
+    toc_float: 
+      collapsed: false
+    toc_depth: 4
+    code_folding: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,message = F,warning = F,fig.height = 5,fig.width = 7)
+library(tidyverse)
+library(limma)
+library(knitr)
+library(DT)
+
+source("dAA_helper_functions.R")
+
+species_annot<-read.csv("example/merged_species_table.csv")
+colnames(species_annot)<-strsplit2(colnames(species_annot),split = "[.]")[,1]
+species_annot<-species_annot[,-grep(pattern = "unmatched|TSNeg|TSZymo|TSZYMO",x = colnames(species_annot))]
+  
+otu<-species_annot %>% select(-clade_taxid)
+rownames(otu)<-otu$clade_name
+
+otu_table<-otu %>% filter(clade_name !="UNKNOWN" & clade_name !="unclassified") %>% select(-clade_name)
+
+# Make sure rownames metadata are sample names as in species table
+
+meta_data<-read.csv("example/TS_metadata.txt",sep = "\t")
+rownames(meta_data)<-meta_data$Sample
+fixed_vars=c("Status","Sex")
+
+output <-
+    wrapper_daa(
+        min_abun = 0,
+        min_prev = 0.01,
+        metadata = meta_data,
+        ASV_table = otu_table,
+        fixed_vars = fixed_vars,
+        rand_vars = NULL
+    )
+
+write.csv(output,file = "dAA_microbe_ouput.csv")
+
+
+
+```
+
+
+
+```{r}
+datatable(output)
+```
+
+
+
+## Pathway Abundance
+
+```{r,results='hide'}
+remove_rows=c("UNMAPPED","UNINTEGRATED","UNGROUPED")
+path_abund<-read.csv("example/merged_pathabundance_unstratified.tsv",sep="\t") %>% filter(!(X..Pathway %in% remove_rows) )
+
+path_abund<-path_abund[,-grep(pattern = "unmatched|TSNeg|TSZymo|TSZYMO",x = colnames(path_abund))]
+
+rownames(path_abund)<-path_abund$X..Pathway
+path_abund<-path_abund %>% select(-X..Pathway)
+path_abund<-path_abund[rowSums(path_abund) >0,]
+colnames(path_abund)<-strsplit2(x = colnames(path_abund),split = "[.]")[,1]
+
+
+```
+
+### TS status
+
+```{r,results='hide'}
+ASV_table<-path_abund %>%mutate(across(where(is.numeric), as.integer))
+output <- wrapper_daa(min_abun = 0,min_prev = 0.01,metadata = meta_data,ASV_table,fixed_vars = fixed_vars,rand_vars=NULL)
+
+write.csv(output,file = "dAA_pathway_abundance_output.csv")
+
+```
+
+```{r}
+datatable(output)
+```
