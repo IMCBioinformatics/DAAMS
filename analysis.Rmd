@@ -22,23 +22,34 @@ library(limma)
 library(knitr)
 library(DT)
 
+# This helper function file has all the necessary functions for this analysis
 source("dAA_helper_functions.R")
+
+
+# A file containing species information. Species as rows and samples as columns
 
 species_annot<-read.csv("example/merged_species_table.csv")
 colnames(species_annot)<-strsplit2(colnames(species_annot),split = "[.]")[,1]
 species_annot<-species_annot[,-grep(pattern = "unmatched|TSNeg|TSZymo|TSZYMO",x = colnames(species_annot))]
-  
+ 
+
 otu<-species_annot %>% select(-clade_taxid)
 rownames(otu)<-otu$clade_name
 
 otu_table<-otu %>% filter(clade_name !="UNKNOWN" & clade_name !="unclassified") %>% select(-clade_name)
 
-# Make sure rownames metadata are sample names as in species table
+
+# Make sure row names in metadata are sample names as in species table
 
 meta_data<-read.csv("example/TS_metadata.txt",sep = "\t")
 rownames(meta_data)<-meta_data$Sample
+
+
+## You can add up to two fixed variables from the metadata file
 fixed_vars=c("Status","Sex")
 
+## Wrapper_daa is the main function that calles all the methods. 
+## IMPORTANT make sure you chose appropriate min_abun and min_prev
 output <-
     wrapper_daa(
         min_abun = 2800,
@@ -65,7 +76,10 @@ datatable(output)
 ## Pathway Abundance
 
 ```{r,results='hide'}
+
+
 remove_rows=c("UNMAPPED","UNINTEGRATED","UNGROUPED")
+
 path_abund<-read.csv("example/merged_pathabundance_unstratified.tsv",sep="\t") %>% filter(!(X..Pathway %in% remove_rows) )
 
 path_abund<-path_abund[,-grep(pattern = "unmatched|TSNeg|TSZymo|TSZYMO",x = colnames(path_abund))]
