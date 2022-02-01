@@ -1,0 +1,160 @@
+2022-02-01 15:44:55 INFO::Writing function arguments to log file
+2022-02-01 15:44:55 DEBUG::Function arguments
+2022-02-01 15:44:55 DEBUG::Output folder: TS/Maaslin2
+2022-02-01 15:44:55 DEBUG::Min Abundance: 0.000000
+2022-02-01 15:44:55 DEBUG::Min Prevalence: 0.100000
+2022-02-01 15:44:55 DEBUG::Normalization: CSS
+2022-02-01 15:44:55 DEBUG::Transform: NONE
+2022-02-01 15:44:55 DEBUG::Analysis method: LM
+2022-02-01 15:44:55 DEBUG::Max significance: 0.250000
+2022-02-01 15:44:55 DEBUG::Random effects:
+2022-02-01 15:44:55 DEBUG::Fixed effects: Status
+2022-02-01 15:44:55 DEBUG::Correction method: BH
+2022-02-01 15:44:55 DEBUG::Standardize: FALSE
+2022-02-01 15:44:55 DEBUG::Cores: 1
+2022-02-01 15:44:55 INFO::Verifying options selected are valid
+2022-02-01 15:44:55 INFO::Determining format of input files
+2022-02-01 15:44:55 INFO::Input format is data samples as rows and metadata samples as rows
+2022-02-01 15:44:55 DEBUG::A total of 66 samples were found in both the data and metadata
+2022-02-01 15:44:55 DEBUG::Reordering data/metadata to use same sample ordering
+2022-02-01 15:44:55 INFO::Formula for fixed effects: expr ~  Status
+2022-02-01 15:44:55 INFO::Filter data based on min abundance and min prevalence
+2022-02-01 15:44:55 INFO::Total samples in data: 66
+2022-02-01 15:44:55 INFO::Min samples required with min abundance for a feature not to be filtered: 6.600000
+2022-02-01 15:44:55 INFO::Total filtered features: 154
+2022-02-01 15:44:55 INFO::Filtered feature names from abundance and prevalence filtering: s__Actinobaculum_sp_oral_taxon_183, s__Actinomyces_johnsonii, s__Actinomyces_naeslundii, s__Actinomyces_odontolyticus, s__Actinomyces_oris, s__Actinomyces_sp_HMSC035G02, s__Actinomyces_sp_HPA0247, s__Actinomyces_sp_ICM47, s__Actinomyces_sp_oral_taxon_448, s__Actinomyces_turicensis, s__Varibaculum_cambriense, s__Bifidobacterium_angulatum, s__Bifidobacterium_breve, s__Bifidobacterium_dentium, s__Corynebacterium_argentoratense, s__Corynebacterium_durum, s__Lawsonella_clevelandensis, s__Rothia_mucilaginosa, s__Atopobium_minutum, s__Collinsella_intestinalis, s__Slackia_isoflavoniconvertens, s__Bacteroides_clarus, s__Bacteroides_coprocola, s__Bacteroides_faecis_CAG_32, s__Bacteroides_finegoldii, s__Bacteroides_galacturonicus, s__Bacteroides_plebeius, s__Bacteroides_salyersiae, s__Bacteroides_sp_CAG_462, s__Coprobacter_fastidiosus, s__Butyricimonas_synergistica, s__Butyricimonas_virosa, s__Odoribacter_laneus, s__Porphyromonas_asaccharolytica, s__Porphyromonas_sp_HMSC065F10, s__Paraprevotella_clara, s__Paraprevotella_xylaniphila, s__Prevotella_buccalis, s__Prevotella_sp_AM42_24, s__Prevotella_sp_CAG_1031, s__Prevotella_sp_CAG_279, s__Alistipes_inops, s__Alistipes_onderdonkii, s__Parabacteroides_johnsonii, s__Parabacteroides_sp_CAG_409, s__Arthrospira_platensis, s__Bacillus_intestinalis, s__Gemella_sanguinis, s__Listeria_monocytogenes, s__Staphylococcus_argenteus, s__Staphylococcus_aureus, s__Enterococcus_faecalis, s__Lactobacillus_acidophilus, s__Lactobacillus_fermentum, s__Lactobacillus_rhamnosus, s__Lactococcus_lactis, s__Streptococcus_anginosus_group, s__Streptococcus_australis, s__Streptococcus_gordonii, s__Streptococcus_lutetiensis, s__Streptococcus_mutans, s__Streptococcus_oralis, s__Streptococcus_salivarius_CAG_79, s__Streptococcus_sanguinis, s__Streptococcus_sp_A12, s__Streptococcus_sp_F0442, s__Streptococcus_vestibularis, s__Butyribacterium_methylotrophicum, s__Clostridium_bolteae_CAG_59, s__Clostridium_paraputrificum, s__Clostridium_perfringens, s__Clostridium_sp_CAG_242, s__Clostridium_sp_CAG_253, s__Clostridium_sp_CAG_964, s__Clostridium_sp_D5, s__Clostridium_ventriculi, s__Eubacterium_brachy, s__Mogibacterium_diversum, s__Clostridiales_bacterium_1_7_47FAA, s__Anaerofustis_stercorihominis, s__Eubacterium_callanderi, s__Eubacterium_dolichum_CAG_375, s__Eubacterium_sp_OM08_24, s__Anaerostipes_caccae, s__Anaerotignum_lactatifermentans, s__Blautia_coccoides, s__Blautia_hansenii, s__Blautia_producta, s__Blautia_sp_N6H1_15, s__Butyrivibrio_sp_CAG_318, s__Dorea_sp_CAG_317, s__Faecalicatena_orotica, s__Clostridium_aldenense, s__Clostridium_asparagiforme, s__Clostridium_citroniae, s__Clostridium_clostridioforme, s__Clostridium_hylemonae, s__Clostridium_lavalense, s__Clostridium_saccharolyticum, s__Lachnoclostridium_sp_An138, s__Lachnoclostridium_sp_An14, s__Roseburia_sp_CAG_303, s__Roseburia_sp_CAG_309, s__Peptococcus_niger, s__Peptostreptococcus_stomatis, s__Anaeromassilibacillus_sp_An172, s__Anaerotruncus_sp_CAG_528, s__Harryflintia_acetispora, s__Clostridium_methylpentosum, s__Ruminococcaceae_bacterium_D5, s__Ruminococcus_champanellensis, s__Ruminococcus_obeum_CAG_39, s__Ruminococcus_sp_CAG_330, s__Ruminococcus_sp_CAG_403, s__Absiella_dolichum, s__Candidatus_Stoquefichus_sp_KLE1796, s__Catenibacterium_mitsuokai, s__Dielma_fastidiosa, s__Holdemanella_biformis, s__Massiliomicrobiota_timonensis, s__Solobacterium_moorei, s__Firmicutes_bacterium_CAG_238, s__Firmicutes_bacterium_CAG_424, s__Firmicutes_bacterium_CAG_646, s__Firmicutes_bacterium_CAG_94, s__Firmicutes_bacterium_CAG_95, s__Acidaminococcus_intestini, s__Phascolarctobacterium_succinatutens, s__Megamonas_funiformis, s__Megamonas_funiformis_CAG_377, s__Megamonas_hypermegale, s__Megasphaera_sp_DISK_18, s__Veillonella_atypica, s__Veillonella_dispar, s__Veillonella_parvula, s__Parvimonas_micra, s__Parvimonas_sp_KA00067, s__Bacteroides_coagulans, s__Fusobacterium_sp_CAG_439, s__Turicimonas_muris, s__Desulfovibrionaceae_bacterium, s__Citrobacter_freundii, s__Citrobacter_pasteurii, s__Citrobacter_youngae, s__Klebsiella_pneumoniae, s__Klebsiella_quasipneumoniae, s__Kluyvera_ascorbata, s__Salmonella_enterica, s__Hafnia_paralvei, s__Haemophilus_sp_HMSC71H05, s__Pseudomonas_aeruginosa_group, s__Saccharomyces_cerevisiae, s__Cryptococcus_neoformans, s__Blastocystis_sp_subtype_1
+2022-02-01 15:44:55 INFO::Total filtered features with variance filtering: 0
+2022-02-01 15:44:55 INFO::Filtered feature names from variance filtering:
+2022-02-01 15:44:55 INFO::Running selected normalization method: CSS
+2022-02-01 15:44:55 INFO::Bypass z-score application to metadata
+2022-02-01 15:44:55 INFO::Running selected transform method: NONE
+2022-02-01 15:44:55 INFO::Running selected analysis method: LM
+2022-02-01 15:44:55 INFO::Fitting model to feature number 1, s__Methanobrevibacter_smithii
+2022-02-01 15:44:55 INFO::Fitting model to feature number 2, s__Bifidobacterium_adolescentis
+2022-02-01 15:44:55 INFO::Fitting model to feature number 3, s__Bifidobacterium_animalis
+2022-02-01 15:44:55 INFO::Fitting model to feature number 4, s__Bifidobacterium_bifidum
+2022-02-01 15:44:55 INFO::Fitting model to feature number 5, s__Bifidobacterium_catenulatum
+2022-02-01 15:44:55 INFO::Fitting model to feature number 6, s__Bifidobacterium_longum
+2022-02-01 15:44:55 INFO::Fitting model to feature number 7, s__Bifidobacterium_pseudocatenulatum
+2022-02-01 15:44:55 INFO::Fitting model to feature number 8, s__Collinsella_aerofaciens
+2022-02-01 15:44:55 INFO::Fitting model to feature number 9, s__Collinsella_stercoris
+2022-02-01 15:44:55 INFO::Fitting model to feature number 10, s__Adlercreutzia_equolifaciens
+2022-02-01 15:44:55 INFO::Fitting model to feature number 11, s__Asaccharobacter_celatus
+2022-02-01 15:44:55 INFO::Fitting model to feature number 12, s__Eggerthella_lenta
+2022-02-01 15:44:55 INFO::Fitting model to feature number 13, s__Enterorhabdus_caecimuris
+2022-02-01 15:44:55 INFO::Fitting model to feature number 14, s__Gordonibacter_pamelaeae
+2022-02-01 15:44:55 INFO::Fitting model to feature number 15, s__Bacteroides_caccae
+2022-02-01 15:44:55 INFO::Fitting model to feature number 16, s__Bacteroides_cellulosilyticus
+2022-02-01 15:44:55 INFO::Fitting model to feature number 17, s__Bacteroides_dorei
+2022-02-01 15:44:55 INFO::Fitting model to feature number 18, s__Bacteroides_eggerthii
+2022-02-01 15:44:55 INFO::Fitting model to feature number 19, s__Bacteroides_faecis
+2022-02-01 15:44:55 INFO::Fitting model to feature number 20, s__Bacteroides_fragilis
+2022-02-01 15:44:55 INFO::Fitting model to feature number 21, s__Bacteroides_intestinalis
+2022-02-01 15:44:55 INFO::Fitting model to feature number 22, s__Bacteroides_massiliensis
+2022-02-01 15:44:55 INFO::Fitting model to feature number 23, s__Bacteroides_ovatus
+2022-02-01 15:44:55 INFO::Fitting model to feature number 24, s__Bacteroides_stercoris
+2022-02-01 15:44:55 INFO::Fitting model to feature number 25, s__Bacteroides_thetaiotaomicron
+2022-02-01 15:44:55 INFO::Fitting model to feature number 26, s__Bacteroides_uniformis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 27, s__Bacteroides_vulgatus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 28, s__Bacteroides_xylanisolvens
+2022-02-01 15:44:56 INFO::Fitting model to feature number 29, s__Barnesiella_intestinihominis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 30, s__Coprobacter_sp
+2022-02-01 15:44:56 INFO::Fitting model to feature number 31, s__Odoribacter_splanchnicus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 32, s__Prevotella_copri
+2022-02-01 15:44:56 INFO::Fitting model to feature number 33, s__Alistipes_finegoldii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 34, s__Alistipes_indistinctus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 35, s__Alistipes_putredinis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 36, s__Alistipes_shahii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 37, s__Parabacteroides_distasonis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 38, s__Parabacteroides_goldsteinii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 39, s__Parabacteroides_merdae
+2022-02-01 15:44:56 INFO::Fitting model to feature number 40, s__Lactobacillus_rogosae
+2022-02-01 15:44:56 INFO::Fitting model to feature number 41, s__Streptococcus_parasanguinis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 42, s__Streptococcus_salivarius
+2022-02-01 15:44:56 INFO::Fitting model to feature number 43, s__Streptococcus_thermophilus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 44, s__Catabacter_hongkongensis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 45, s__Christensenella_minuta
+2022-02-01 15:44:56 INFO::Fitting model to feature number 46, s__Clostridium_disporicum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 47, s__Clostridium_sp_CAG_167
+2022-02-01 15:44:56 INFO::Fitting model to feature number 48, s__Clostridium_sp_CAG_299
+2022-02-01 15:44:56 INFO::Fitting model to feature number 49, s__Clostridium_sp_CAG_58
+2022-02-01 15:44:56 INFO::Fitting model to feature number 50, s__Hungatella_hathewayi
+2022-02-01 15:44:56 INFO::Fitting model to feature number 51, s__Intestinimonas_butyriciproducens
+2022-02-01 15:44:56 INFO::Fitting model to feature number 52, s__Lawsonibacter_asaccharolyticus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 53, s__Monoglobus_pectinilyticus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 54, s__Eubacterium_eligens
+2022-02-01 15:44:56 INFO::Fitting model to feature number 55, s__Eubacterium_hallii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 56, s__Eubacterium_ramulus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 57, s__Eubacterium_sp_CAG_180
+2022-02-01 15:44:56 INFO::Fitting model to feature number 58, s__Eubacterium_sp_CAG_251
+2022-02-01 15:44:56 INFO::Fitting model to feature number 59, s__Eubacterium_sp_CAG_274
+2022-02-01 15:44:56 INFO::Fitting model to feature number 60, s__Eubacterium_sp_CAG_38
+2022-02-01 15:44:56 INFO::Fitting model to feature number 61, s__Eubacterium_ventriosum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 62, s__Anaerostipes_hadrus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 63, s__Blautia_hydrogenotrophica
+2022-02-01 15:44:56 INFO::Fitting model to feature number 64, s__Blautia_obeum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 65, s__Blautia_sp_CAG_257
+2022-02-01 15:44:56 INFO::Fitting model to feature number 66, s__Blautia_wexlerae
+2022-02-01 15:44:56 INFO::Fitting model to feature number 67, s__Ruminococcus_gnavus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 68, s__Ruminococcus_torques
+2022-02-01 15:44:56 INFO::Fitting model to feature number 69, s__Coprococcus_catus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 70, s__Coprococcus_comes
+2022-02-01 15:44:56 INFO::Fitting model to feature number 71, s__Coprococcus_eutactus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 72, s__Dorea_formicigenerans
+2022-02-01 15:44:56 INFO::Fitting model to feature number 73, s__Dorea_longicatena
+2022-02-01 15:44:56 INFO::Fitting model to feature number 74, s__Eisenbergiella_massiliensis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 75, s__Eisenbergiella_tayi
+2022-02-01 15:44:56 INFO::Fitting model to feature number 76, s__Fusicatenibacter_saccharivorans
+2022-02-01 15:44:56 INFO::Fitting model to feature number 77, s__Clostridium_bolteae
+2022-02-01 15:44:56 INFO::Fitting model to feature number 78, s__Clostridium_scindens
+2022-02-01 15:44:56 INFO::Fitting model to feature number 79, s__Clostridium_symbiosum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 80, s__Eubacterium_rectale
+2022-02-01 15:44:56 INFO::Fitting model to feature number 81, s__Lachnospira_pectinoschiza
+2022-02-01 15:44:56 INFO::Fitting model to feature number 82, s__Roseburia_faecis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 83, s__Roseburia_hominis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 84, s__Roseburia_intestinalis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 85, s__Roseburia_inulinivorans
+2022-02-01 15:44:56 INFO::Fitting model to feature number 86, s__Roseburia_sp_CAG_182
+2022-02-01 15:44:56 INFO::Fitting model to feature number 87, s__Roseburia_sp_CAG_471
+2022-02-01 15:44:56 INFO::Fitting model to feature number 88, s__Sellimonas_intestinalis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 89, s__Tyzzerella_nexilis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 90, s__Oscillibacter_sp_57_20
+2022-02-01 15:44:56 INFO::Fitting model to feature number 91, s__Oscillibacter_sp_CAG_241
+2022-02-01 15:44:56 INFO::Fitting model to feature number 92, s__Intestinibacter_bartlettii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 93, s__Romboutsia_ilealis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 94, s__Agathobaculum_butyriciproducens
+2022-02-01 15:44:56 INFO::Fitting model to feature number 95, s__Anaeromassilibacillus_sp_An250
+2022-02-01 15:44:56 INFO::Fitting model to feature number 96, s__Anaerotruncus_colihominis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 97, s__Faecalibacterium_prausnitzii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 98, s__Flavonifractor_plautii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 99, s__Gemmiger_formicilis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 100, s__Clostridium_leptum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 101, s__Eubacterium_siraeum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 102, s__Ruminococcus_bicirculans
+2022-02-01 15:44:56 INFO::Fitting model to feature number 103, s__Ruminococcus_bromii
+2022-02-01 15:44:56 INFO::Fitting model to feature number 104, s__Ruminococcus_callidus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 105, s__Ruminococcus_lactaris
+2022-02-01 15:44:56 INFO::Fitting model to feature number 106, s__Ruthenibacterium_lactatiformans
+2022-02-01 15:44:56 INFO::Fitting model to feature number 107, s__Coprobacillus_cateniformis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 108, s__Clostridium_innocuum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 109, s__Clostridium_spiroforme
+2022-02-01 15:44:56 INFO::Fitting model to feature number 110, s__Erysipelatoclostridium_ramosum
+2022-02-01 15:44:56 INFO::Fitting model to feature number 111, s__Holdemania_filiformis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 112, s__Turicibacter_sanguinis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 113, s__Firmicutes_bacterium_CAG_110
+2022-02-01 15:44:56 INFO::Fitting model to feature number 114, s__Firmicutes_bacterium_CAG_145
+2022-02-01 15:44:56 INFO::Fitting model to feature number 115, s__Firmicutes_bacterium_CAG_83
+2022-02-01 15:44:56 INFO::Fitting model to feature number 116, s__Phascolarctobacterium_faecium
+2022-02-01 15:44:56 INFO::Fitting model to feature number 117, s__Dialister_invisus
+2022-02-01 15:44:56 INFO::Fitting model to feature number 118, s__Parasutterella_excrementihominis
+2022-02-01 15:44:56 INFO::Fitting model to feature number 119, s__Bilophila_wadsworthia
+2022-02-01 15:44:56 INFO::Fitting model to feature number 120, s__Desulfovibrio_piger
+2022-02-01 15:44:56 INFO::Fitting model to feature number 121, s__Escherichia_coli
+2022-02-01 15:44:56 INFO::Fitting model to feature number 122, s__Haemophilus_parainfluenzae
+2022-02-01 15:44:56 INFO::Fitting model to feature number 123, s__Proteobacteria_bacterium_CAG_139
+2022-02-01 15:44:56 INFO::Fitting model to feature number 124, s__Akkermansia_muciniphila
+2022-02-01 15:44:56 INFO::Counting total values for each feature
+2022-02-01 15:44:56 INFO::Writing residuals to file TS/Maaslin2/residuals.rds
+2022-02-01 15:44:56 INFO::Writing fitted values to file TS/Maaslin2/fitted.rds
+2022-02-01 15:44:56 INFO::Writing all results to file (ordered by increasing q-values): TS/Maaslin2/all_results.tsv
+2022-02-01 15:44:56 INFO::Writing the significant results (those which are less than or equal to the threshold of 0.250000 ) to file (ordered by increasing q-values): TS/Maaslin2/significant_results.tsv

@@ -29,9 +29,11 @@ source("dAA_helper_functions.R")
 # A file containing species information. Species as rows and samples as columns
 
 species_annot<-read.csv("example/merged_species_table.csv")
-colnames(species_annot)<-strsplit2(colnames(species_annot),split = "[.]")[,1]
-species_annot<-species_annot[,-grep(pattern = "unmatched|TSNeg|TSZymo|TSZYMO",x = colnames(species_annot))]
- 
+# colnames(species_annot)<-strsplit2(colnames(species_annot),split = "[.]")[,1]
+# species_annot<-species_annot[,-grep(pattern = "unmatched|TSNeg|TSZymo|TSZYMO",x = colnames(species_annot))]
+# 
+# species_annot$clade_name<-strsplit2(species_annot$clade_name,split = "[|]")[,7]
+# write.csv(x = species_annot,file = "example/merged_species_table.csv",row.names = F)
 
 otu<-species_annot %>% select(-clade_taxid)
 rownames(otu)<-otu$clade_name
@@ -41,13 +43,25 @@ otu_table<-otu %>% filter(clade_name !="UNKNOWN" & clade_name !="unclassified") 
 
 # Make sure row names in metadata are sample names as in species table
 
-meta_data<-read.csv("example/TS_metadata.txt",sep = "\t")
-rownames(meta_data)<-meta_data$Sample
+meta_data<-read.csv("example/TS_metadata.txt",sep = "\t",stringsAsFactors = T)
+ rownames(meta_data)<-meta_data$Sample
 
 
 ## You can add up to two fixed variables from the metadata file
 fixed_vars=c("Status","Sex")
+fixed_vars="Status"
+#Directory where results from each method are saved and the combined tables are saved too.
 
+
+output_dir="TS"
+output_taxa=paste0(output_dir,"/taxa_results")
+output_pathabund=paste0(output_dir,"/pathabund_results")
+output_genefamilies=paste0(output_dir,"/genefamilies_results")
+
+dir.create(output_dir)
+dir.create(output_taxa)
+dir.create(output_pathabund)
+dir.create(output_genefamilies)
 ## Wrapper_daa is the main function that calles all the methods. 
 ## IMPORTANT make sure you chose appropriate min_abun and min_prev
 output <-
@@ -57,10 +71,11 @@ output <-
         metadata = meta_data,
         ASV_table = otu_table,
         fixed_vars = fixed_vars,
-        rand_vars = NULL
+        rand_vars = NULL,
+        output_dir=output_taxa
     )
 
-write.csv(output,file = "dAA_microbe_ouput.csv")
+write.csv(output,file = paste0(output_dir,"/dAA_microbe_ouput.csv"))
 
 
 ```
@@ -96,9 +111,13 @@ colnames(path_abund)<-strsplit2(x = colnames(path_abund),split = "[.]")[,1]
 
 ```{r,results='hide'}
 ASV_table<-path_abund %>%mutate(across(where(is.numeric), as.integer))
-output <- wrapper_daa(min_abun = 0,min_prev = 0.01,metadata = meta_data,ASV_table,fixed_vars = fixed_vars,rand_vars=NULL)
+rownames(ASV_table)<-gsub("[[:punct:]]", "_", rownames(ASV_table))
+rownames(ASV_table)<-gsub(" ", "", rownames(ASV_table))
 
-write.csv(output,file = "dAA_pathway_abundance_output.csv")
+output <- wrapper_daa(min_abun = 0,min_prev = 0.01,metadata = meta_data,ASV_table,fixed_vars = fixed_vars,rand_vars=NULL,output_dir = output_pathabund)
+
+
+write.csv(output_dir,file = paste0(output_dir,"/dAA_pathway_abundance_output.csv"))
 
 ```
 

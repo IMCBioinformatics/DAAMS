@@ -8,6 +8,7 @@ library(metagenomeSeq)
 library(rstatix)
 library(phyloseq)
 library(DESeq2)
+library(ANCOMBC)
 # For ANCOM this file is required
 source("~/projects/Differential_analysis_smg/ancom_v2_1.R")
 
@@ -22,7 +23,7 @@ source("~/projects/Differential_analysis_smg/ancom_v2_1.R")
 #' @param rand_vars  Variables like subjects that are measured multiple times can be placed here
 #' @param maaslin2_normalization Normalization method for maaslin2 can be one of c("TSS", "CLR", "CSS", "NONE", "TMM") default = CSS
 #' @param maaslin2_transform  Tranformation method for maaslin2 can be one of c("LOG", "LOGIT", "AST", "NONE") default = None
-#'
+#' @param output_directory a dir where to store results from individual method
 #' @return returns a dataframe with results from suited DA methods
 #' @export
 #'
@@ -35,7 +36,8 @@ wrapper_daa <-
            fixed_vars,
            rand_vars = NULL,
            maaslin2_normalization="CSS",
-           maaslin2_transform="None") {
+           maaslin2_transform="None",
+           output_directory=output_directory) {
     ## metadata
     metadata <- tryCatch(
       metadata %>% select(fixed_vars, rand_vars),
@@ -44,7 +46,9 @@ wrapper_daa <-
           "fixed_vars or rand_vars not found in provided metadata "
         ))
     )
-    groupings <- metadata %>% drop_na()
+    groupings <- metadata %>% na_if("") %>% drop_na()
+    
+    
    
     print(c("Testing for variables:", fixed_vars))
     print(c("Random variables used:",rand_vars))
@@ -75,26 +79,38 @@ wrapper_daa <-
       if(!is.null(rand_vars)){
       fixed_formula_deseq <- paste0("~", fixed_vars,"+",rand_vars)
       fixed_formula_deseq <- as.formula(fixed_formula_deseq)
+      fixed_formula_ancombc<-paste0(fixed_vars, "+" ,rand_vars)
       } else {
         fixed_formula_deseq <- paste0("~", fixed_vars)
         fixed_formula_deseq <- as.formula(fixed_formula_deseq)
+        fixed_formula_ancombc<-fixed_vars
       }
       
       print(c("Formula being used for Deseq",fixed_formula_deseq))
       
-      all_res <- left_join(deseq_fun(ASV_table, groupings,fixed_formula_deseq),
-                           edgeR_fun(ASV_table, groupings),
-                           by = "microbe") %>%
-        left_join(., maaslin2_fun(abundance_table = ASV_table,
-                                  metadata = groupings,
-                                  normalization = maaslin2_normalization,
-                                  transform = maaslin2_transform,
-                                  fixed_effect = fixed_vars,
-                                  random_effects = rand_vars,
-                                  output = "test"), by = "microbe") %>%
-        left_join(., metagenomeSeq_fun(ASV_table, groupings), by = "microbe") %>%
-        left_join(., ANCOM2_fun(ASV_table, groupings), by = "microbe")
       
+      deseq<-deseq_fun(ASV_table, groupings,fixed_formula_deseq,output_directory) 
+      edgeR<-edgeR_fun(ASV_table, groupings,fixed_vars,output_directory)
+      maaslin2<-maaslin2_fun(abundance_table = ASV_table,
+                   metadata = groupings,
+                   normalization = maaslin2_normalization,
+                   transform = maaslin2_transform,
+                   fixed_effect = fixed_vars,
+                   random_effects = rand_vars,
+                   output = output_directory) %>% select(-Comparison)
+      
+      mseq<-metagenomeSeq_fun(ASV_table, groupings,fixed_vars,output_directory)
+    ancom2<-ANCOM2_fun(ASV_table, groupings,fixed_vars,output_directory)
+    ancombc<-ANCOMBC_fun(ASV_table, groupings,fixed_vars,output_directory)%>% select(-Comparison)
+    
+   all_res<-left_join(deseq,edgeR,by = "microbe") %>%
+       left_join(.,maaslin2,by="microbe") %>%
+       left_join(.,mseq,by="microbe") %>%
+       left_join(.,ancom2,by="microbe") %>%
+       left_join(.,ancombc,by="microbe")
+    
+      
+  
     }
     else if (length(fixed_vars) == 2) {
       if(!is.null(rand_vars)){
@@ -103,6 +119,8 @@ wrapper_daa <-
       }else{
         fixed_formula_deseq <-
           paste0("~", fixed_vars[1], "+", fixed_vars[2])
+        
+        fixed_formula_ancombc<-paste0(fixed_vars,collapse="+")
       }
       
     } else if (length(fixed_vars) > 2) {
@@ -119,7 +137,7 @@ wrapper_daa <-
       
       all_res <-
         left_join(
-          deseq_fun(ASV_table, groupings, fixed_formula_deseq),
+          deseq_fun(ASV_table, groupings, fixed_formula_deseq,output_directory),
           maaslin2_fun(
             abundance_table = ASV_table,
             metadata = groupings,
@@ -127,10 +145,10 @@ wrapper_daa <-
             transform = maaslin2_transform,
             fixed_effect = fixed_vars,
             random_effects = rand_vars,
-            output = "test"
+            output = output_directory
           ),
-          by = c("microbe","Comparison")
-        )
+          by = c("microbe","Comparison")) %>%
+          left_join(.,ANCOMBC_fun(ASV_table, groupings,fixed_vars,output_directory), by =c("microbe","Comparison"))
     }
     return(all_res)
   }
@@ -149,7 +167,7 @@ wrapper_daa <-
 #'
 #' @examples
 
-deseq_fun <- function(abundance_table, metadata, formula) {
+deseq_fun <- function(abundance_table, metadata, formula,output_directory) {
   dds <- DESeqDataSetFromMatrix(countData = abundance_table,
                                         colData = metadata,
                                         design = formula)
@@ -166,8 +184,9 @@ deseq_fun <- function(abundance_table, metadata, formula) {
         format = "DataFrame",
         name = resultsNames(dds_res)[2]
       )
+  
     res1$Comparison <- paste0(strsplit2(resultsNames(dds_res)[2],split = "_")[,1:2],collapse = "")
-      
+
     
     res2 <-
       results(
@@ -183,7 +202,8 @@ deseq_fun <- function(abundance_table, metadata, formula) {
   else{
   
     res <- results(dds_res, tidy = T, format = "DataFrame")
-    res$Comparison <- resultsNames(dds_res)[2]
+    res$Comparison <- paste0(strsplit2(resultsNames(dds_res)[2],split = "_")[,1:2],collapse = "")
+    
   }
   
   
@@ -194,16 +214,32 @@ deseq_fun <- function(abundance_table, metadata, formula) {
     dplyr::rename(deseq_padj = padj) %>%
     select(microbe, Comparison , deseq_LFC, deseq_padj)
   
+  write.csv(res,file = paste0(output_directory,"/","deseq.csv"))
   #  return(deseq)
   return(deseq)
 }
 
 
 
+
+
+#' Title
+#'
+#' @param abundance_table 
+#' @param metadata 
+#' @param fixed_effect at the moment edgeR function only takes one fixed variable
+#' @param output_directory 
+#' @param adjust.method 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 edgeR_fun <-
   function(abundance_table,
-           metadata,
+           metadata,fixed_effect,output_directory,
            adjust.method = "fdr") {
+      
     ### Taken from phyloseq authors at: https://joey711.github.io/phyloseq-extensions/edgeR.html
     phyloseq_to_edgeR = function(physeq, group, method = "RLE", ...) {
       # Enforce orientation.
@@ -245,12 +281,18 @@ edgeR_fun <-
       return(estimateTagwiseDisp(estimateCommonDisp(z)))
     }
     
+    if(length(fixed_effect) > 1) {
+        stop(
+            "At the moment EdgeR only works with one fixed effect variable and you are using:",
+            fixed_effect
+        )
+    }
     OTU <- phyloseq::otu_table(abundance_table, taxa_are_rows = T)
     sampledata <- phyloseq::sample_data(metadata, errorIfNULL = T)
     phylo <- phyloseq::merge_phyloseq(OTU, sampledata)
     
     test <-
-      phyloseq_to_edgeR(physeq = phylo, group = colnames(metadata)[1])
+      phyloseq_to_edgeR(physeq = phylo, group = fixed_effect)
     
     et = exactTest(test)
     
@@ -266,6 +308,7 @@ edgeR_fun <-
       dplyr::rename(edgeR_LFC = logFC) %>%
       dplyr::rename(edgeR_padj = FDR) %>%
       select(microbe, edgeR_LFC, edgeR_padj)
+    write.csv(res,file = paste0(output_directory,"/","edgeR.csv"))
     return(edgeR_res)
   }
 
@@ -277,7 +320,7 @@ maaslin2_fun <-
            transform = "NONE",
            fixed_effect,
            random_effects = NULL,
-           output = "temp") {
+           output = output) {
     abundance_table <-
       data.frame(
         t(abundance_table),
@@ -285,12 +328,14 @@ maaslin2_fun <-
         check.names = F,
         stringsAsFactors = F
       )
+    print("In Maaslin2")
+    output_masslin2<-paste0(output,"/Maaslin2")
     
     fit_data <-
       Maaslin2(
         input_data = abundance_table,
         input_metadata = metadata,
-        output = output,
+        output = output_masslin2,
         transform = transform,
         normalization = normalization,
         fixed_effects = fixed_effect,
@@ -300,17 +345,28 @@ maaslin2_fun <-
         plot_scatter = F
       )
     
-    M2 <-
-      fit_data$results %>% dplyr::rename(microbe = feature) %>%
+    M2 <-fit_data$results %>% dplyr::rename(microbe = feature) %>%
       dplyr::rename(M2_coef = coef) %>% dplyr::rename(M2_padj = qval) %>%
       dplyr::rename(Comparison = name) %>% dplyr::rename(Num_not_zero = N.not.zero)%>%
     select(microbe, M2_coef, M2_padj,Comparison, Num_not_zero)
- 
+    
+    
+    write.csv(data.frame(fit_data$results),file = paste0(output,"/","Maaslin2.csv"))
+  print(M2$microbe)
     return(M2)
   }
 
 
-metagenomeSeq_fun <- function(abundance_table, metadata) {
+metagenomeSeq_fun <- function(abundance_table, metadata,fixed_effect,output_directory) {
+    print("In MetagenomeSeq")
+    
+    if(length(fixed_effect) > 1) {
+        stop(
+            "At the moment Metagenome_Seq_fun only works with one fixed effect variable and you are using:",
+            fixed_effect
+        )
+    }
+    
   data_list <- list()
   data_list[["counts"]] <- abundance_table
   data_list[["taxa"]] <- rownames(abundance_table)
@@ -336,19 +392,27 @@ metagenomeSeq_fun <- function(abundance_table, metadata) {
   
   test_obj_norm <- cumNorm(test_obj, p = p)
   
-  fromula <-
-    as.formula(paste(~ 1, colnames(metadata)[1], sep = " + "))
+
+  
+  formula <-
+      as.formula(paste(~ 1, fixed_effect, sep = " + "))
+  
+  
   pd <- pData(test_obj_norm)
-  mod <- model.matrix(fromula, data = pd)
-  regres <- fitFeatureModel(test_obj_norm, mod)
   
-  res_table <-
-    MRfulltable(regres, number = length(rownames(abundance_table))) %>% rownames_to_column("microbe") %>%
+  mod <- model.matrix(formula, data = pd)
+
+  regres <- metagenomeSeq::fitFeatureModel(test_obj_norm, mod)
+
+  res_table <-MRfulltable(regres, number = length(rownames(abundance_table))) 
+
+    res_table<-res_table%>% rownames_to_column("microbe") %>%
     dplyr::rename(MSeq_OR = oddsRatio) %>%
-    dplyr::rename(MSeq_LFC = logFC) %>%
-    dplyr::rename(MSeq_padj = adjPvalues) %>%
-    select(microbe, MSeq_OR, MSeq_LFC, MSeq_padj)
+     dplyr::rename(MSeq_LFC = logFC) %>%
+     dplyr::rename(MSeq_padj = adjPvalues) %>%
+     select(microbe, MSeq_OR, MSeq_LFC, MSeq_padj)
   
+  write.csv(MRfulltable(regres, number = length(rownames(abundance_table))),file = paste0(output_directory,"/","metagenomeseq.csv"))
   return(res_table)
 }
 
@@ -356,13 +420,16 @@ metagenomeSeq_fun <- function(abundance_table, metadata) {
 
 ANCOM2_fun <-
   function(abundance_table,
-           metadata,
+           metadata,fixed_effect,
+           output_directory,
            rand_formula = NULL,
            p_adj_method = "BH",
            alpha = 0.05,
            out_cut = 0.05,
            zero_cut = 0.90,
            lib_cut = 1000) {
+      print("In ANCOM2")
+
     metadata$Sample <- rownames(metadata)
     prepro <-
       feature_table_pre_process(
@@ -380,12 +447,14 @@ ANCOM2_fun <-
     metadata <- prepro$meta_data
     struc_zero <- prepro$structure_zeros
     
+   
     #run ancom
-    main_var <- colnames(metadata)[1]
+    main_var <- fixed_effect
     p_adj_method = p_adj_method
     alpha = alpha
     adj_formula = NULL
     rand_formula = rand_formula
+   
     res <-
       ANCOM(
         feature_table = feature_table,
@@ -398,17 +467,51 @@ ANCOM2_fun <-
         rand_formula = rand_formula
       )
     
+    write.csv(x = res$out,file = paste0(output_directory,"/ANCOM2.csv"))
     ANCOM2_res <-
       res$out %>% dplyr::rename(microbe = taxa_id) %>%
-      dplyr::rename(ANCOM2_W = W) %>%
+      dplyr::rename(ANCOM2_W_stat = W) %>%
       dplyr::rename(ANCOM2_0.6 = detected_0.6) %>%
-      select(microbe, ANCOM2_W, ANCOM2_0.6)
+      select(microbe, ANCOM2_W_stat, ANCOM2_0.6)
     
     return(ANCOM2_res)
   }
 
 
-wilcox_AST <- function(abundance_table, metadata) {
+
+ANCOMBC_fun<-function(abundance_table,metadata,fixed_effect,output_directory,padj="fdr",zero_cut=0.9,
+                      lib_cut=1000,struc_zero=FALSE,neg_lb=FALSE,tol=1e-5,max_iter=100,
+                      conserve=TRUE,alpha=0.05,global=FALSE,group=NULL){
+
+    
+    OTU <- phyloseq::otu_table(abundance_table, taxa_are_rows = T)
+    sampledata <- phyloseq::sample_data(metadata, errorIfNULL = T)
+    phylo <- phyloseq::merge_phyloseq(OTU, sampledata)
+
+    out = ancombc(phyloseq = phylo, formula = fixed_effect, 
+                  p_adj_method = "fdr", zero_cut = zero_cut, lib_cut = lib_cut, 
+                 struc_zero = struc_zero, neg_lb = neg_lb, tol = tol, 
+                  max_iter = max_iter, conserve = conserve, alpha = alpha, 
+                 global = global,group=group)
+    
+    
+    res<-out$res
+
+    
+    coef<-res$beta %>% rownames_to_column("microbe") %>% tidyr::gather(key="Comparison",value = "ANCOM_BC_Coef",-microbe)
+    padj<-res$q_val%>% rownames_to_column("microbe") %>% tidyr::gather(key="Comparison",value = "ANCOM_BC_padj",-microbe) 
+    stats<-res$W %>% rownames_to_column("microbe") %>% tidyr::gather(key="Comparison",value = "ANCOM_BC_W_stat",-microbe)
+    
+    
+    results<-left_join(coef,stats,by=c("microbe","Comparison")) %>% left_join(padj,by=c("microbe","Comparison"))
+    
+    write.csv(x = out$samp_frac,file = paste0(output_directory,"/ANCOMBC_sample_fracs.csv"))
+    write.csv(x = results,file = paste0(output_directory,"/ANCOMBC.csv"))
+    
+    return(results)
+    }
+
+wilcox_AST <- function(abundance_table, metadata,output_directory) {
   ### WILCOX + AST
   
   # Arc Sine Square Root Transformation
@@ -433,7 +536,11 @@ wilcox_AST <- function(abundance_table, metadata) {
         rstatix::group_by(microbe) %>%
         wilcox_effsize(abundance ~ Groupings),
       by = "microbe"
-    ) %>%
+    ) 
+  
+  
+  write.csv(WRS_res,file = paste0(output_directory,"/Wilcox_AST.csv"))
+  WRS_res<-WRS_res %>%
     select(microbe, effsize, p.adj) %>%
     dplyr::rename(WRS_effsize = effsize) %>%
     dplyr::rename(WRS_padj = p.adj)
