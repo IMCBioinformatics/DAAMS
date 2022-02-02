@@ -53,7 +53,7 @@ fixed_vars=c("Status","Sex")
 #Directory where results from each method are saved and the combined tables are saved too.
 
 
-output_dir="TS"
+output_dir="results"
 output_taxa=paste0(output_dir,"/taxa_results")
 output_pathabund=paste0(output_dir,"/pathabund_results")
 output_genefamilies=paste0(output_dir,"/genefamilies_results")
