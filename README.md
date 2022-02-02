@@ -46,18 +46,18 @@ Following inputs files required:
 
 An analysis.Rmd file has the complete workflow that can be used for Metaphlan3 results and for pathway abundace tables from Humann3.
 
-## Good to know
+## Method details and shortcommings
 
 Most of the methods used here have a lot of flexibility and the functions can take a lot more parameters as input. The table bellow explains the limitations and 
 
-|Method      | Information | What features are used     | What is missing|
-| :---        |    :----:   |          ---: | ---:|
-| DeSeq2      |   [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)     |  Works for two variables |     |
-| EdgeR   |  [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf)  |       |  Works for one variable    |
-| Maaslin2   |[UserGuide](https://www.bioconductor.org/packages/release/bioc/vignettes/Maaslin2/inst/doc/maaslin2.html)    |  works for two variables + random variables     |     |
-| MetagenomeSeq   |[UserGuide](https://www.bioconductor.org/packages/devel/bioc/vignettes/metagenomeSeq/inst/doc/metagenomeSeq.pdf)|  works for one variable   |       |     |
-| ANCOM2   |   [UserGuide](https://github.com/FrederickHuangLin/ANCOM) | works for one variable  + 1 random variable     |     |
-| ANCOM-BC  | [UserGuide](http://www.bioconductor.org/packages/release/bioc/vignettes/ANCOMBC/inst/doc/ANCOMBC.html)   | works for two variables + 1 random variable      |     |
+|Method      |  function Name| Output files|Information | What features are used     | What is not used|
+| :---        |    :----:   |          ---: | ---:|---:|---:|
+| DeSeq2      | Deseq_fun()|deseq.csv|  [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)     |  Works for two variables | Ramdom variables are added to the model like (Fixed + random). No interaction terms are allowed|
+| EdgeR   |edgeR_fun() |edgeR.csv| [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf)  |  Works for one|| variable    | Need to include more than one variable.s
+| Maaslin2   |maaslin2_fun()| Maaslin2.csv + Maaslin2 dir| [UserGuide](https://www.bioconductor.org/packages/release/bioc/vignettes/Maaslin2/inst/doc/maaslin2.html)    |  works for two variables + random variables     | Not much missing but you can change the normalization method or add transformation    |
+| MetagenomeSeq   |metagenomeSeq_fun()|Metagenomeseq.csv|[UserGuide](https://www.bioconductor.org/packages/devel/bioc/vignettes/metagenomeSeq/inst/doc/metagenomeSeq.pdf)|  works for one variable   |   It can be extended to multiple variables as per the user guide but looks more difficult to include   |  
+| ANCOM2   |  AMCOM2_fun() |ANCOM2.csv|[UserGuide](https://github.com/FrederickHuangLin/ANCOM) | works for one variable  + 1 random variable     | structural zero feature is not being used right now but it can be use if the ANCOM2fun is called directly |
+| ANCOM-BC  |ANCOMBC_fun() |ANCOMBC.csv + ACNOMBC_sample_fracs.csv|[UserGuide](http://www.bioconductor.org/packages/release/bioc/vignettes/ANCOMBC/inst/doc/ANCOMBC.html)   | works for two variables + 1 random variable      | Bias correction is not done but the sample fractions are saved if anyone wants to do it later.    |
 
 
 
