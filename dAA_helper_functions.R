@@ -25,7 +25,7 @@ source("~/projects/Differential_analysis_smg/ancom_v2_1.R")
 #' @param maaslin2_transform  Tranformation method for maaslin2 can be one of c("LOG", "LOGIT", "AST", "NONE") default = None
 #' @param output_directory a dir where to store results from individual method
 #' @return returns a dataframe with results from suited DA methods
-#' @export
+
 #'
 #' @examples
 wrapper_daa <-
@@ -154,7 +154,8 @@ wrapper_daa <-
   }
 
 
-
+## Most functions are taken and modified from 
+## https://github.com/nearinj/Comparison_of_DA_microbiome_methods
 
 #Run Deseq2
 #' Title
