@@ -49,7 +49,7 @@ meta_data<-read.csv("example/TS_metadata.txt",sep = "\t",stringsAsFactors = T)
 
 ## You can add up to two fixed variables from the metadata file
 fixed_vars=c("Status","Sex")
-fixed_vars="Status"
+#fixed_vars="Status"
 #Directory where results from each method are saved and the combined tables are saved too.
 
 
