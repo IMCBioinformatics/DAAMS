@@ -50,14 +50,14 @@ An analysis.Rmd file has the complete workflow that can be used for Metaphlan3 r
 
 Most of the methods used here have a lot of flexibility and the functions can take a lot more parameters as input. The table bellow explains the limitations and 
 
-|Method      | Description | What features are used     | What is missing|
+|Method      | Information | What features are used     | What is missing|
 | :---        |    :----:   |          ---: | ---:|
-| DeSeq2      |        |    |     |
-| EdgeR   |    |       |     |
-| Maaslin2   |    |       |     |
-| MetagenomeSeq   |    |       |     |
-| ANCOM2   |    |       |     |
-| ANCOM-BC  |    |       |     |
+| DeSeq2      |   [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)     |  Works for two variables |     |
+| EdgeR   |  [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf)  |       |  Works for one variable    |
+| Maaslin2   |[UserGuide](https://www.bioconductor.org/packages/release/bioc/vignettes/Maaslin2/inst/doc/maaslin2.html)    |  works for two variables + random variables     |     |
+| MetagenomeSeq   |[UserGuide](https://www.bioconductor.org/packages/devel/bioc/vignettes/metagenomeSeq/inst/doc/metagenomeSeq.pdf)|  works for one variable   |       |     |
+| ANCOM2   |   [UserGuide](https://github.com/FrederickHuangLin/ANCOM) | works for one variable  + 1 random variable     |     |
+| ANCOM-BC  | [UserGuide](http://www.bioconductor.org/packages/release/bioc/vignettes/ANCOMBC/inst/doc/ANCOMBC.html)   | works for two variables + 1 random variable      |     |
 
 
 
