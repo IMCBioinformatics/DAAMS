@@ -52,9 +52,12 @@ Most of the methods used here have a lot of flexibility and the functions can ta
 
 |Method      | Description | What features are used     | What is missing|
 | :---        |    :----:   |          ---: | ---:|
-| Header      | Title       | Here's this   |     |
-| Paragraph   | Text        | And more      |     |
-
+| DeSeq2      |        |    |     |
+| EdgeR   |    |       |     |
+| Maaslin2   |    |       |     |
+| MetagenomeSeq   |    |       |     |
+| ANCOM2   |    |       |     |
+| ANCOM-BC  |    |       |     |
 
 
 
