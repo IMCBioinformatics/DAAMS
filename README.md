@@ -33,7 +33,7 @@ Following inputs files required:
 
 1. A comma separated species table is required. See [example](example/merged_species_table.csv)
 
-2. A metadata file for example see [file](example/TS_metadata.txt)
+2. A metadata file, see [example](example/TS_metadata.txt)
 
 3. The name of the column in the metadata file that is the variable of interest. 
 
@@ -48,6 +48,16 @@ An analysis.Rmd file has the complete workflow that can be used for Metaphlan3 r
 
 ## Good to know
 
-Most of the methods used here have a lot of variables that
+Most of the methods used here have a lot of flexibility and the functions can take a lot more parameters as input. The table bellow explains the limitations and 
+
+|Method      | Description | What features are used     | What is missing|
+| :---        |    :----:   |          ---: | ---:|
+| Header      | Title       | Here's this   |     |
+| Paragraph   | Text        | And more      |     |
+
+
+
+
+
 
 
