@@ -48,7 +48,7 @@ An analysis.Rmd file has the complete workflow that can be used for Metaphlan3 r
 
 ## Method details and shortcommings
 
-Most of the methods used here have a lot of flexibility and the functions can take a lot more parameters as input. The table bellow explains the limitations and 
+Most of the methods used here have a lot of flexibility and the functions can take a lot more parameters as input. The table below explains briefly how these methods are used here. Also all output files are found in the output directory specified by the user. 
 
 |Method      |  function Name| Output files|Information | What features are used     | What is not used|
 | :---        |    :----:   |          ---: | ---:|---:|---:|
