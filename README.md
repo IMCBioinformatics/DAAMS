@@ -64,16 +64,27 @@ Most of the methods used here have a lot of flexibility and the functions can ta
 
 
 ## Required R packages
+
 tidyverse v1.3.1
+
 limma v3.50.0 
+
 knitr v1.37
+
 edgeR v3.36.0
+
 Maaslin2 v1.8.0
+
 metagenomeSeq v1.36.0
+
 rstatix v0.7.0 
+
 phyloseq v1.38.0
+
 DESeq2 v1.34.0
+
 ANCOMBC V1.4.0
+
 DT v0.20
 
 
