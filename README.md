@@ -1,7 +1,8 @@
 
 # DAAMS
-Differential abundance analysis for shotgun metagenomics
+Differential abundance analysis for shotgun metagenomics.
 
+For quick start take a look at [analysis.Rmd](analysis.Rmd)
 
 ## Summary
 
@@ -29,7 +30,7 @@ For fixed variables and a random variable (like subject in repeated measures) th
 
 ## Input
 
-Following inputs files required:
+The main function to use is `wrapper_daa()` and following inputs are required by this function:
 
 1. A comma separated species table is required. See [example](example/merged_species_table.csv)
 
@@ -44,7 +45,7 @@ Following inputs files required:
 6. Output_dir: Output directory where all the results are saved.
 
 
-An analysis.Rmd file has the complete workflow that can be used for Metaphlan3 results and for pathway abundace tables from Humann3.
+An [analysis.Rmd](analysis.Rmd) file has the complete workflow that can be used for Metaphlan3 results and for pathway abundace tables from Humann3.
 
 ## Method details and shortcommings
 
