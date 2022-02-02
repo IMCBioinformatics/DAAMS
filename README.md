@@ -5,6 +5,7 @@ Differential abundance analysis for shotgun metagenomics. This repo is inspired 
 
 For quick start take a look at [analysis.Rmd](analysis.Rmd)
 
+
 ## Summary
 
 This is a simple wrapper that invokes several methods for differential abundance analysis.
@@ -54,7 +55,7 @@ Most of the methods used here have a lot of flexibility and the functions can ta
 
 |Method      |  function Name| Output files|Information | What features are used     | What is not used|
 | :---        |    :----:   |          ---: | ---:|---:|---:|
-| DeSeq2      | Deseq_fun()|deseq.csv|  [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)     |  Works for two variables | Ramdom variables are added to the model like (Fixed + random). No interaction terms are allowed|
+| DESeq2      | Deseq_fun()|deseq.csv|  [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)     |  Works for two variables | Ramdom variables are added to the model like (Fixed + random). No interaction terms are allowed|
 | EdgeR   |edgeR_fun() |edgeR.csv| [UserGuide](https://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf)  |  Works for one|| variable    | Need to include more than one variable.s
 | Maaslin2   |maaslin2_fun()| Maaslin2.csv + Maaslin2 dir| [UserGuide](https://www.bioconductor.org/packages/release/bioc/vignettes/Maaslin2/inst/doc/maaslin2.html)    |  works for two variables + random variables ,CSS normalization is default and no transformation is applied   | Not much missing but you can change the normalization method or add transformation    |
 | MetagenomeSeq   |metagenomeSeq_fun()|Metagenomeseq.csv|[UserGuide](https://www.bioconductor.org/packages/devel/bioc/vignettes/metagenomeSeq/inst/doc/metagenomeSeq.pdf)|  works for one variable   |   It can be extended to multiple variables as per the user guide but looks more difficult to include   |  
@@ -62,7 +63,17 @@ Most of the methods used here have a lot of flexibility and the functions can ta
 | ANCOM-BC  |ANCOMBC_fun() |ANCOMBC.csv + ACNOMBC_sample_fracs.csv|[UserGuide](http://www.bioconductor.org/packages/release/bioc/vignettes/ANCOMBC/inst/doc/ANCOMBC.html)   | works for two variables + 1 random variable      | Bias correction is not done but the sample fractions are saved if anyone wants to do it later.    |
 
 
-
-
+## Required R packages
+tidyverse v1.3.1
+limma v3.50.0 
+knitr v1.37
+edgeR v3.36.0
+Maaslin2 v1.8.0
+metagenomeSeq v1.36.0
+rstatix v0.7.0 
+phyloseq v1.38.0
+DESeq2 v1.34.0
+ANCOMBC V1.4.0
+DT v0.20
 
 
