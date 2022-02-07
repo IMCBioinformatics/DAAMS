@@ -1,6 +1,6 @@
 
 # DAAMS
-Differential abundance analysis for shotgun metagenomics. This repo is inspired by https://github.com/nearinj/Comparison_of_DA_microbiome_methods. Changes are made here to include multiple variables for some methods and also more suitable for shotgun metagenomics data. 
+Differential abundance analysis for shotgun metagenomics. This repo is inspired by https://github.com/nearinj/Comparison_of_DA_microbiome_methods and uses their code as the starting code. Changes are made here to include multiple variables for some methods and also more suitable for shotgun metagenomics data. 
 
 
 For quick start take a look at [analysis.Rmd](analysis.Rmd)
