@@ -1,6 +1,6 @@
 
 # DAAMS
-Differential abundance analysis for shotgun metagenomics. This repo is inspired by https://github.com/nearinj/Comparison_of_DA_microbiome_methods. Changes are made here to include multiple variables for some methods and also more suitable for shotgun metagenomics data. 
+Differential abundance analysis for shotgun metagenomics. This repo is inspired by https://github.com/nearinj/Comparison_of_DA_microbiome_methods and uses their code as the starting code. Changes are made here to include multiple variables for some methods and also more suitable for shotgun metagenomics data. 
 
 
 For quick start take a look at [analysis.Rmd](analysis.Rmd)
@@ -62,6 +62,10 @@ Most of the methods used here have a lot of flexibility and the functions can ta
 | ANCOM2   |  AMCOM2_fun() |ANCOM2.csv|[UserGuide](https://github.com/FrederickHuangLin/ANCOM) | works for one variable  + 1 random variable     | structural zero feature is not being used right now but it can be use if the ANCOM2fun is called directly |
 | ANCOM-BC  |ANCOMBC_fun() |ANCOMBC.csv + ACNOMBC_sample_fracs.csv|[UserGuide](http://www.bioconductor.org/packages/release/bioc/vignettes/ANCOMBC/inst/doc/ANCOMBC.html)   | works for two variables + 1 random variable      | Bias correction is not done but the sample fractions are saved if anyone wants to do it later.    |
 
+## Suitable Normalization methods
+
+For some methods, there is an option to chose a normalization or transformation method. Based on recent publication [Pereira
+ et. al 2018](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4637-6) methods that perform the best (Low false postives (FG) and high true positve rates (TP)) are RLE( relative log expression), TMM(trimmed mean of M-values) and CSS (cumulative sum scaling) for larger dataset.
 
 ## Required R packages
 
